@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>简易聊天室</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<h1>简易聊天室</h1>
+<div id="current-user">
+    当前用户：<span id="username-display">未登录</span>
+    <button onclick="resetUsername()">切换用户</button>
+</div>
+
+<!-- 用户名弹窗 -->
+<div id="username-modal">
+    <input type="text" id="username-input" placeholder="请输入用户名">
+    <button id="enter-chat-btn">进入聊天室</button>
+</div>
+
+<!-- 聊天主界面 -->
+<div id="chat-interface">
+    <div id="chat-container"></div>
+    <div id="input-area">
+        <input type="text" id="message-input" placeholder="输入消息...">
+        <button id="send-btn">发送</button>
+    </div>
+</div>
+
+<script src="/js/chat.js"></script>
+</body>
+</html>

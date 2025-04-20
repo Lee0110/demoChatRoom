@@ -1,0 +1,68 @@
+/* 基础样式 */
+body {
+    font-family: Arial, sans-serif;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* 弹窗样式 */
+#username-modal {
+    display: none;
+    border: 1px solid #ccc;
+    padding: 20px;
+    border-radius: 5px;
+    width: 300px;
+    margin: 50px auto;
+}
+
+/* 聊天容器 */
+#chat-container {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    height: 400px;
+    overflow-y: auto;
+    margin-bottom: 10px;
+}
+
+/* 消息气泡 */
+.message {
+    margin: 5px 0;
+    padding: 8px;
+    border-radius: 5px;
+    background-color: #f0f0f0;
+}
+
+/* 输入区域 */
+#input-area {
+    display: flex;
+    gap: 10px;
+}
+#message-input {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+button {
+    padding: 8px 15px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+button:hover {
+    background-color: #0056b3;
+}
+#current-user {
+    margin: 10px 0;
+    padding: 10px;
+    background-color: #e9ecef;
+    border-radius: 5px;
+}
+#username-display {
+    color: #007bff;
+    font-weight: bold;
+}
