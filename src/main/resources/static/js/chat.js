@@ -21,7 +21,7 @@ let heartbeatInterval; // 心跳定时器
 let reconnectTimer; // 重连定时器
 // ==================== WebSocket连接 ====================
 function initWebSocket() {
-    socket = new WebSocket("ws://192.168.3.12:8081/chat");
+    socket = new WebSocket("ws://localhost:8081/chat");
     // 连接成功
     socket.onopen = () => {
         console.log("WebSocket连接已建立");
