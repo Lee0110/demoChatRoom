@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2493181c-595e-42a0-877b-e243b6a46f75" name="Changes" comment="init" />
+    <list default="true" id="2493181c-595e-42a0-877b-e243b6a46f75" name="Changes" comment="update workspace.xml to add new work items and increment localTasksCounter">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -48,6 +51,7 @@
 }</component>
   <component name="ProjectId" id="2tiFCsLrxksTthCU59OrcTplHgV" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <OptionsSetting value="false" id="Update" />
     <ConfirmationsSetting value="2" id="Add" />
   </component>
   <component name="ProjectViewState">
@@ -74,10 +78,13 @@
     &quot;project.structure.last.edited&quot;: &quot;SDKs&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.46179965&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.projectsettings.compiler.javacompiler&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
+  <component name="ReactorSettings">
+    <option name="notificationShown" value="true" />
+  </component>
   <component name="RunManager">
     <configuration name="DemoChatRoomApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
       <module name="demoChatRoom" />
@@ -128,6 +135,13 @@
       <workItem from="1749599662592" duration="268000" />
       <workItem from="1749640990048" duration="493000" />
       <workItem from="1749655690089" duration="5000" />
+      <workItem from="1749820507314" duration="118000" />
+      <workItem from="1749820656599" duration="269000" />
+      <workItem from="1749821442945" duration="637000" />
+      <workItem from="1749822084604" duration="101000" />
+      <workItem from="1749822190081" duration="319000" />
+      <workItem from="1749822515417" duration="125000" />
+      <workItem from="1749822645278" duration="192000" />
     </task>
     <task id="LOCAL-00001" summary="init">
       <option name="closed" value="true" />
