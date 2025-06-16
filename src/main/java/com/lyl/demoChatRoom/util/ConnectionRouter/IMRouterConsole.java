@@ -1,5 +1,18 @@
 package com.lyl.demoChatRoom.util.ConnectionRouter;
 
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
+import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
+import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.jsontype.impl.LaissezFaireSubTypeValidator;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
+
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
@@ -9,12 +22,50 @@ public class IMRouterConsole {
     
     private final IConnectionRouter router;
     private final Scanner scanner;
-    
+
     public IMRouterConsole() {
-        this.router = new ConsistentHashRouter(150);
+        RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
+        initRedisTemplate(redisTemplate);
+        this.router = new StatelessConsistentHashRouter(redisTemplate);
         this.scanner = new Scanner(System.in);
     }
-    
+
+    private void initRedisTemplate(RedisTemplate<String, Object> redisTemplate) {
+        // 配置Redis连接
+        RedisStandaloneConfiguration redisConfig = new RedisStandaloneConfiguration();
+        redisConfig.setHostName("localhost");
+        redisConfig.setPort(6379);
+        // 无密码，不需要设置密码
+
+        // 创建连接工厂
+        RedisConnectionFactory connectionFactory = new LettuceConnectionFactory(redisConfig);
+        ((LettuceConnectionFactory) connectionFactory).afterPropertiesSet();
+
+        // 设置连接工厂
+        redisTemplate.setConnectionFactory(connectionFactory);
+
+        // 使用Jackson2JsonRedisSerializer作为默认序列化器
+        Jackson2JsonRedisSerializer<Object> jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer<>(Object.class);
+
+        // 配置ObjectMapper以支持完整的类型信息
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
+        objectMapper.activateDefaultTyping(LaissezFaireSubTypeValidator.instance, ObjectMapper.DefaultTyping.NON_FINAL);
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+
+        jackson2JsonRedisSerializer.setObjectMapper(objectMapper);
+
+        // 设置key和value的序列化策略
+        redisTemplate.setKeySerializer(new StringRedisSerializer());
+        redisTemplate.setValueSerializer(jackson2JsonRedisSerializer);
+        redisTemplate.setHashKeySerializer(new StringRedisSerializer());
+        redisTemplate.setHashValueSerializer(jackson2JsonRedisSerializer);
+
+        // 初始化RedisTemplate的属性
+        redisTemplate.afterPropertiesSet();
+    }
+
     public void start() {
         System.out.println("IM服务器路由控制台");
         System.out.println("==================");

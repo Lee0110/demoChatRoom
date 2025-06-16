@@ -66,9 +66,9 @@ public class StatelessConsistentHashRouter implements IConnectionRouter {
             // 检查是否已有配置
             if (!redisTemplate.hasKey(HASH_RING_CONFIG)) {
                 Map<String, Object> config = new HashMap<>();
-                config.put("virtual_nodes", String.valueOf(virtualNodes));
+                config.put("virtual_nodes", virtualNodes);
                 config.put("hash_function", "murmur3");
-                config.put("version", "0");
+                config.put("version", 0);
                 redisTemplate.opsForHash().putAll(HASH_RING_CONFIG, config);
             }
         } catch (Exception e) {
