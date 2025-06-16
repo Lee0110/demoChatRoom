@@ -166,7 +166,7 @@ public class IMRouterConsole {
     
     private void getUserServer() {
         String userId = getStringInput("请输入用户ID: ");
-        String server = router.getServerForUser(userId);
+        String server = router.addUser(userId);
         
         if (server != null) {
             System.out.println("用户 " + userId + " 分配到服务器: " + server);
@@ -177,7 +177,7 @@ public class IMRouterConsole {
     
     private void getServiceServer() {
         String serviceId = getStringInput("请输入客服ID: ");
-        String server = router.getServerForService(serviceId);
+        String server = router.addService(serviceId);
         
         if (server != null) {
             System.out.println("客服 " + serviceId + " 分配到服务器: " + server);
@@ -250,17 +250,48 @@ public class IMRouterConsole {
         
         System.out.println("正在批量添加连接...");
         
-        // 添加用户
-        for (int i = 1; i <= userCount; i++) {
-            router.getServerForUser("user" + i);
+        // 获取现有连接映射，以确定当前用户数量
+        Map<String, Set<String>> existingConnections = router.getAllConnections();
+        int existingUserCount = 0;
+        int existingServiceCount = 0;
+
+        // 统计已存在的用户和客服数量
+        for (Set<String> connectionSet : existingConnections.values()) {
+            for (String connection : connectionSet) {
+                if (connection.startsWith("user:user")) {
+                    // 提取用户ID中的数字部分
+                    try {
+                        int userNum = Integer.parseInt(connection.substring(9));
+                        existingUserCount = Math.max(existingUserCount, userNum);
+                    } catch (NumberFormatException ignored) {}
+                } else if (connection.startsWith("service:service")) {
+                    // 提取客服ID中的数字部分
+                    try {
+                        int serviceNum = Integer.parseInt(connection.substring(15));
+                        existingServiceCount = Math.max(existingServiceCount, serviceNum);
+                    } catch (NumberFormatException ignored) {}
+                }
+            }
+        }
+
+        System.out.println("当前已有用户数量: " + existingUserCount);
+        System.out.println("当前已有客服数量: " + existingServiceCount);
+
+        // 添加用户，从现有最大ID+1开始
+        int startUserNumber = existingUserCount + 1;
+        for (int i = startUserNumber; i < startUserNumber + userCount; i++) {
+            router.addUser("user" + i);
         }
         
-        // 添加客服
-        for (int i = 1; i <= serviceCount; i++) {
-            router.getServerForService("service" + i);
+        // 添加客服，从现有最大ID+1开始
+        int startServiceNumber = existingServiceCount + 1;
+        for (int i = startServiceNumber; i < startServiceNumber + serviceCount; i++) {
+            router.addService("service" + i);
         }
         
-        System.out.printf("成功添加 %d 个用户和 %d 个客服连接%n", userCount, serviceCount);
+        System.out.printf("成功添加 %d 个用户和 %d 个客服连接，新用户ID范围: user%d-user%d，新客服ID范围: service%d-service%d%n",
+                userCount, serviceCount, startUserNumber, startUserNumber + userCount - 1,
+                startServiceNumber, startServiceNumber + serviceCount - 1);
     }
     
     private String getStringInput(String prompt) {

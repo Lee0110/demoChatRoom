@@ -77,16 +77,26 @@ public class StatelessConsistentHashRouter implements IConnectionRouter {
     }
     
     @Override
-    public String getServerForUser(String userId) {
+    public String addUser(String userId) {
         return getServer("user:" + userId);
     }
     
     @Override
-    public String getServerForService(String serviceId) {
-        return getServer("service:" + serviceId);
+    public String addService(String serviceId) {
+        return getServer("customer_service:" + serviceId);
     }
-    
-    private String getServer(String key) {
+
+    @Override
+    public String getServerForUser(String userId) {
+        return getServer("user:" + userId, false);
+    }
+
+    @Override
+    public String getServerForService(String serviceId) {
+        return getServer("customer_service:" + serviceId, false);
+    }
+
+    private String getServer(String key, boolean isUpdateToRedis) {
         // 确保本地缓存是最新的
         refreshCacheIfNeeded();
         
@@ -108,6 +118,10 @@ public class StatelessConsistentHashRouter implements IConnectionRouter {
         cacheConnectionMapping(key, server);
         
         return server;
+    }
+
+    private String getServer(String key) {
+        return getServer(key, true);
     }
     
     @Override

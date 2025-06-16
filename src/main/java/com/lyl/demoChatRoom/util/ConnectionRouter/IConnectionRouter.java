@@ -14,13 +14,17 @@ public interface IConnectionRouter {
      * @param userId 用户ID
      * @return 服务器节点，如果没有可用服务器返回null
      */
-    String getServerForUser(String userId);
+    String addUser(String userId);
 
     /**
      * 获取客服应该连接的服务器
      * @param serviceId 客服ID
      * @return 服务器节点，如果没有可用服务器返回null
      */
+    String addService(String serviceId);
+
+    String getServerForUser(String userId);
+
     String getServerForService(String serviceId);
 
     /**

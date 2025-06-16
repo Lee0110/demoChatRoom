@@ -29,15 +29,29 @@ public class ConsistentHashRouter implements IConnectionRouter {
     }
     
     @Override
-    public String getServerForUser(String userId) {
+    public String addUser(String userId) {
+        // todo
         return getServer("user:" + userId);
     }
     
     @Override
-    public String getServerForService(String serviceId) {
+    public String addService(String serviceId) {
+        // todo
         return getServer("service:" + serviceId);
     }
-    
+
+    @Override
+    public String getServerForUser(String userId) {
+        // todo
+        return "";
+    }
+
+    @Override
+    public String getServerForService(String serviceId) {
+        // todo
+        return "";
+    }
+
     private String getServer(String key) {
         if (ring.isEmpty()) {
             return null;
